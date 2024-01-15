@@ -1,0 +1,65 @@
+﻿@page "/Developers/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Game Developers</h3>
+@if (Developers == null)
+{
+    <div class="alert alert-info">Loading Developers...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Developer in Developers)
+            {
+                <tr>
+                    <td>@Developer.Name</td>
+                    <td>
+                        <a href="/Developers/view/@Developer.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Developers/edit/@Developer.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Developer.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+<br />
+
+@code {
+    private List<Developer>? Developers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Developers = await _client.GetFromJsonAsync<List<Developer>>($"{Endpoints.DevelopersEndpoint}");
+    }
+
+    async Task Delete(int DeveloperId)
+    {
+        if (Developers != null)
+        {
+            var Developer = Developers.First(q => q.Id == DeveloperId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Developer.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.DevelopersEndpoint}/{DeveloperId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+}

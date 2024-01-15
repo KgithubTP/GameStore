@@ -30,7 +30,7 @@ namespace GameStore.Server.Controllers
         //public async Task<ActionResult<IEnumerable<Game>>> GetGames()
         public async Task<IActionResult> GetGames()
         {
-            var Games = await _unitOfWork.Games.GetAll();
+            var Games = await _unitOfWork.Games.GetAll(includes: q => q.Include(x =>x.Title).Include(x => x.Genre).Include(x => x.Platform).Include(x => x.Developer));
             return Ok(Games);
         }
 

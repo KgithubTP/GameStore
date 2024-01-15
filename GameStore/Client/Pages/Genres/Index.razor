@@ -1,0 +1,65 @@
+﻿@page "/genres/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Game Genres</h3>
+@if (Genres ==null)
+{
+    <div class="alert alert-info">Loading Genres...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var genre in Genres)
+            {
+                <tr>
+                    <td>@genre.Name</td>
+                    <td> 
+                        <a href="/genres/view/@genre.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/genres/edit/@genre.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(genre.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+                
+            }
+        </tbody>
+    </table>
+}
+<br />
+
+@code {
+    private List<Genre>? Genres;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Genres = await _client.GetFromJsonAsync<List<Genre>>($"{Endpoints.GenresEndpoint}");
+    }
+
+    async Task Delete(int genreId)
+    {
+        if (Genres != null)
+        {
+            var genre = Genres.First(q => q.Id == genreId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {genre.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.GenresEndpoint}/{genreId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+}

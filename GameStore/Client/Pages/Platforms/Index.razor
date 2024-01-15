@@ -1,0 +1,65 @@
+﻿@page "/Platforms/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Game Platforms</h3>
+@if (Platforms == null)
+{
+    <div class="alert alert-info">Loading Platforms...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Platform in Platforms)
+            {
+                <tr>
+                    <td>@Platform.Name</td>
+                    <td>
+                        <a href="/Platforms/view/@Platform.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Platforms/edit/@Platform.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Platform.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+<br />
+
+@code {
+    private List<Platform>? Platforms;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Platforms = await _client.GetFromJsonAsync<List<Platform>>($"{Endpoints.PlatformsEndpoint}");
+    }
+
+    async Task Delete(int PlatformId)
+    {
+        if (Platforms != null)
+        {
+            var Platform = Platforms.First(q => q.Id == PlatformId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Platform.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.PlatformsEndpoint}/{PlatformId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+}
