@@ -4,23 +4,20 @@ using GameStore.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GameStore.Server.Data.Migrations
+namespace GameStore.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240109084915_AddApplicationTables")]
-    partial class AddApplicationTables
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "7.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -235,6 +232,44 @@ namespace GameStore.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "564d2a87-bdd5-45b7-a26a-26c0ddd345c4",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPTev8hh2tUWOMj+tfduLNfWiAvkq6nKG6S0yK97Gq/Zs3mkUt+W0rhDI5f4p+2ATw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "482dd834-85ab-4e0d-bc15-dc44ce3533e4",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        },
+                        new
+                        {
+                            Id = "a50453d1-eb03-4e96-a671-82488a8747bd",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "728dfde6-3ea3-4be5-a263-e92b5b7a5ec8",
+                            Email = "user@localhost.com",
+                            EmailConfirmed = false,
+                            FirstName = "User",
+                            LastName = "UserLN",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@LOCALHOST.COM",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBPUs07lIkTETk429coaS9tD2k0CgBIbufTHU2NuhjO3QgqwPNM2JZKAU3dhAHP1Tw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7eba301d-cb1a-4652-aa5a-fdeed41d4663",
+                            TwoFactorEnabled = false,
+                            UserName = "user@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("GameStore.Shared.Domain.Customer", b =>
@@ -261,6 +296,12 @@ namespace GameStore.Server.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -297,6 +338,26 @@ namespace GameStore.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Developers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5764),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5765),
+                            Name = "Obsidian",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5767),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5768),
+                            Name = "Arkane",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("GameStore.Shared.Domain.Game", b =>
@@ -325,7 +386,7 @@ namespace GameStore.Server.Data.Migrations
                     b.Property<int>("PlatformId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("TitleId")
@@ -376,6 +437,26 @@ namespace GameStore.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4603),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4624),
+                            Name = "FPS",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4628),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4628),
+                            Name = "Horror",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("GameStore.Shared.Domain.Order", b =>
@@ -442,6 +523,59 @@ namespace GameStore.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Platforms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6019),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6020),
+                            Name = "PC",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6022),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6022),
+                            Name = "Switch",
+                            UpdatedBy = "System"
+                        });
+                });
+
+            modelBuilder.Entity("GameStore.Shared.Domain.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("GameStore.Shared.Domain.Title", b =>
@@ -470,6 +604,26 @@ namespace GameStore.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Titles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5405),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5407),
+                            Name = "Outer Worlds",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5411),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5411),
+                            Name = "Prey",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -497,6 +651,20 @@ namespace GameStore.Server.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -586,6 +754,18 @@ namespace GameStore.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        },
+                        new
+                        {
+                            UserId = "a50453d1-eb03-4e96-a671-82488a8747bd",
+                            RoleId = "bd2bcf0c-20db-474f-8407-5a6b159518bb"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -659,6 +839,17 @@ namespace GameStore.Server.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameStore.Shared.Domain.Review", b =>
+                {
+                    b.HasOne("GameStore.Shared.Domain.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Game");
                 });

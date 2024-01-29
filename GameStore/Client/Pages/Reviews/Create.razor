@@ -1,0 +1,65 @@
+﻿@page "/Reviews/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Reviews</h3>
+<hr />
+<br />
+
+<EditForm Model="@Review" OnValidSubmit="CreateReview">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Review: </label>
+        <div>
+            <InputText @bind-Value="@Review.Name" class="form-control" />
+            <ValidationMessage For="@(()=> Review.Name)" />
+        </div>
+    </div>
+    @*
+    <div class="form-group">
+        <label>Game: </label>
+        <div>
+            <InputSelect @bind-Value="Review.GameId" class="form-control">
+                <option value="">-- Select Game --</option>
+                @*
+                @if (Games != null)
+                {
+                    foreach (var game in Games)
+                    {
+                        <option value="@game.Id">@game.TitleId</option>
+                    }
+                }
+                
+                <option value="1">game1</option>
+                <option value="2">game2</option>
+
+            </InputSelect>
+            <ValidationMessage For="@(() => Review.GameId)" />
+        </div>
+    </div>
+    *@
+
+
+
+    <br />
+    <button type="submit" class="btn btn-success btn-block">
+        Create Review
+    </button>
+</EditForm>
+
+@code {
+    Review Review = new Review();
+    private IList<Game>? Games;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Games = await _client.GetFromJsonAsync<List<Game>>($"{Endpoints.GamesEndpoint}");
+    }
+    private async Task CreateReview()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ReviewsEndpoint, Review);
+        _navManager.NavigateTo("/Reviews/");
+    }
+}

@@ -9,5 +9,7 @@ namespace GameStore.Shared.Domain
     public class Review : BaseDomainModel
     {
         public string? Name { get; set; }
+        public int GameId { get; set; }
+        public virtual Game? Game { get; set; }
     }
 }

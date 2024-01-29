@@ -1,0 +1,104 @@
+﻿
+@page "/games/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Games</h3>
+<hr />
+<br />
+
+<EditForm Model="@game" OnValidSubmit="CreateGame">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Genre: </label>
+        <div>
+            <InputSelect @bind-Value="game.GenreId" class="form-control">
+                <option value="">-- Select Genre --</option>
+                @if (Genres != null)
+                {
+                    foreach (var genre in Genres)
+                    {
+                        <option value="@genre.Id">@genre.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => game.GenreId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Title: </label>
+        <div>
+            <InputSelect @bind-Value="game.TitleId" class="form-control">
+                <option value="">-- Select Title --</option>
+                @if (Titles != null)
+                {
+                    foreach (var title in Titles)
+                    {
+                        <option value="@title.Id">@title.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => game.TitleId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Developer: </label>
+        <div>
+            <InputSelect @bind-Value="game.DeveloperId" class="form-control">
+                <option value="">-- Select Developer --</option>
+                @if (Developers != null)
+                {
+                    foreach (var developer in Developers)
+                    {
+                        <option value="@developer.Id">@developer.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => game.DeveloperId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Platform: </label>
+        <div>
+            <InputSelect @bind-Value="game.PlatformId" class="form-control">
+                <option value="">-- Select Platform --</option>
+                @if (Platforms != null)
+                {
+                    foreach (var platform in Platforms)
+                    {
+                        <option value="@platform.Id">@platform.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => game.PlatformId)" />
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success btn-block">
+        Create Game
+    </button>
+</EditForm>
+
+@code {
+    Game game = new Game();
+
+    private IList<Genre>? Genres;
+    private IList<Title>? Titles;
+    private IList<Platform>? Platforms;
+    private IList<Developer>? Developers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Genres = await _client.GetFromJsonAsync<List<Genre>>($"{Endpoints.GenresEndpoint}");
+        Titles = await _client.GetFromJsonAsync<List<Title>>($"{Endpoints.TitlesEndpoint}");
+        Platforms = await _client.GetFromJsonAsync<List<Platform>>($"{Endpoints.PlatformsEndpoint}");
+        Developers = await _client.GetFromJsonAsync<List<Developer>>($"{Endpoints.DevelopersEndpoint}");
+    }
+    private async Task CreateGame()
+    {
+        await _client.PostAsJsonAsync(Endpoints.GamesEndpoint, game);
+        _navManager.NavigateTo("/games/");
+    }
+}

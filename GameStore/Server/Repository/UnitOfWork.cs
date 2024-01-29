@@ -24,6 +24,7 @@ namespace GameStore.Server.Repository
         private IGenericRepository<Order> _Orders;
         private IGenericRepository<Customer> _customers;
         private IGenericRepository<Game> _Games;
+        private IGenericRepository<Review> _Reviews;
 
         private UserManager<ApplicationUser> _userManager;
 
@@ -47,6 +48,8 @@ namespace GameStore.Server.Repository
             => _Orders ??= new GenericRepository<Order>(_context);
         public IGenericRepository<Customer> Customers
             => _customers ??= new GenericRepository<Customer>(_context);
+        public IGenericRepository<Review> Reviews
+            => _Reviews ??= new GenericRepository<Review>(_context);
 
         public void Dispose()
         {

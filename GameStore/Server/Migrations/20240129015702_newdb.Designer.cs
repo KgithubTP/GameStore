@@ -9,18 +9,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GameStore.Server.Data.Migrations
+namespace GameStore.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240109093016_AddedDefaultDataAndUser")]
-    partial class AddedDefaultDataAndUser
+    [Migration("20240129015702_newdb")]
+    partial class newdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "7.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -241,7 +241,7 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8370d77-7d4d-4898-b4e5-d5a86ed662be",
+                            ConcurrencyStamp = "564d2a87-bdd5-45b7-a26a-26c0ddd345c4",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -249,9 +249,9 @@ namespace GameStore.Server.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENLD5YXuL7duwP63AYLz9fgWDrBII478ZXRO94Iz67kChR20Af+DXfEat5mg9D0rzw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPTev8hh2tUWOMj+tfduLNfWiAvkq6nKG6S0yK97Gq/Zs3mkUt+W0rhDI5f4p+2ATw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "34d9032e-9fbc-4c15-89c9-d0eb55a0924b",
+                            SecurityStamp = "482dd834-85ab-4e0d-bc15-dc44ce3533e4",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -259,7 +259,7 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = "a50453d1-eb03-4e96-a671-82488a8747bd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5f764b6a-d157-4363-a324-f23f50da8e62",
+                            ConcurrencyStamp = "728dfde6-3ea3-4be5-a263-e92b5b7a5ec8",
                             Email = "user@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -267,9 +267,9 @@ namespace GameStore.Server.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEs/Y1nlgCkDc696wLB/Ci+Zb+qGvxsYCOKze/MJ5w0kscCpq5msRuM3aoPvOyc/sQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBPUs07lIkTETk429coaS9tD2k0CgBIbufTHU2NuhjO3QgqwPNM2JZKAU3dhAHP1Tw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ee46e526-9cbf-4e6e-83b2-980743498f9f",
+                            SecurityStamp = "7eba301d-cb1a-4652-aa5a-fdeed41d4663",
                             TwoFactorEnabled = false,
                             UserName = "user@localhost.com"
                         });
@@ -299,6 +299,12 @@ namespace GameStore.Server.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -341,8 +347,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3249),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3249),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5764),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5765),
                             Name = "Obsidian",
                             UpdatedBy = "System"
                         },
@@ -350,8 +356,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3251),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3251),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5767),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5768),
                             Name = "Arkane",
                             UpdatedBy = "System"
                         });
@@ -383,10 +389,7 @@ namespace GameStore.Server.Data.Migrations
                     b.Property<int>("PlatformId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReviewId")
+                    b.Property<int?>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("TitleId")
@@ -405,8 +408,6 @@ namespace GameStore.Server.Data.Migrations
                     b.HasIndex("GenreId");
 
                     b.HasIndex("PlatformId");
-
-                    b.HasIndex("ReviewId");
 
                     b.HasIndex("TitleId");
 
@@ -445,8 +446,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(2625),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(2637),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4603),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4624),
                             Name = "FPS",
                             UpdatedBy = "System"
                         },
@@ -454,8 +455,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(2640),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(2640),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4628),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(4628),
                             Name = "Horror",
                             UpdatedBy = "System"
                         });
@@ -531,8 +532,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3476),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3476),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6019),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6020),
                             Name = "PC",
                             UpdatedBy = "System"
                         },
@@ -540,8 +541,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3478),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3478),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6022),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(6022),
                             Name = "Switch",
                             UpdatedBy = "System"
                         });
@@ -564,6 +565,9 @@ namespace GameStore.Server.Data.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -571,6 +575,8 @@ namespace GameStore.Server.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("Reviews");
                 });
@@ -607,8 +613,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3033),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3034),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5405),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5407),
                             Name = "Outer Worlds",
                             UpdatedBy = "System"
                         },
@@ -616,8 +622,8 @@ namespace GameStore.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3036),
-                            DateUpdated = new DateTime(2024, 1, 9, 17, 30, 16, 314, DateTimeKind.Local).AddTicks(3037),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5411),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 57, 1, 965, DateTimeKind.Local).AddTicks(5411),
                             Name = "Prey",
                             UpdatedBy = "System"
                         });
@@ -806,12 +812,6 @@ namespace GameStore.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GameStore.Shared.Domain.Review", "Review")
-                        .WithMany()
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GameStore.Shared.Domain.Title", "Title")
                         .WithMany()
                         .HasForeignKey("TitleId")
@@ -823,8 +823,6 @@ namespace GameStore.Server.Data.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("Platform");
-
-                    b.Navigation("Review");
 
                     b.Navigation("Title");
                 });
@@ -844,6 +842,17 @@ namespace GameStore.Server.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameStore.Shared.Domain.Review", b =>
+                {
+                    b.HasOne("GameStore.Shared.Domain.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Game");
                 });

@@ -20,5 +20,6 @@ namespace GameStore.Server.IRepository
         IGenericRepository<Platform> Platforms { get; }
         IGenericRepository<Order> Orders { get; }
         IGenericRepository<Customer> Customers { get; }
+        IGenericRepository<Review> Reviews{ get; }
     }
 }

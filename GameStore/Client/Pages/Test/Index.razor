@@ -1,9 +1,17 @@
-﻿@page "/Games/"
+﻿@*
+@page "/Games/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3 class="card-title">Game Games</h3>
+<h3 class="card-title">Games</h3>
+<a href="/games/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Game
+</a>
+<br />
+<br />
+
 @if (Games == null)
 {
     <div class="alert alert-info">Loading Games...</div>
@@ -70,3 +78,4 @@ else
         }
     }
 }
+*@

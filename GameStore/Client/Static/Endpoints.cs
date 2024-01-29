@@ -16,5 +16,6 @@ namespace GameStore.Client.Static
         public static readonly string GamesEndpoint = $"{Prefix}/games";
         public static readonly string OrdersEndpoint = $"{Prefix}/orders";
         public static readonly string CustomersEndpoint = $"{Prefix}/customers";
+        public static readonly string ReviewsEndpoint = $"{Prefix}/reviews";
     }
 }
